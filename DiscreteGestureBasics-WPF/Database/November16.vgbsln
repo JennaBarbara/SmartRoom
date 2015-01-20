@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<GestureBuilderFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<SolutionFile>
+		<Header>
+			<Date>2014-11-16</Date>
+			<Time>17:21:15.3275843-05:00</Time>
+			<Version>1</Version>
+			<Type>Solution</Type>
+			<ID>2bb64a64-ba68-4d65-93fe-08056ed9ba0c</ID>
+		</Header>
+		<Solution_Data>
+			<Files>
+				<Name />
+				<Content>
+					<Items>
+						<File>HandRaised_Left.vgbproj</File>
+					</Items>
+					<Items>
+						<File>HandRaised_Left.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>HandRaised_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>HandRaised_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>wave.vgbproj</File>
+					</Items>
+					<Items>
+						<File>wave.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>waveProgress.vgbproj</File>
+					</Items>
+					<Items>
+						<File>waveProgress.a.vgbproj</File>
+					</Items>
+				</Content>
+			</Files>
+		</Solution_Data>
+		<UI_State />
+		<Attributes />
+	</SolutionFile>
+</GestureBuilderFile>
