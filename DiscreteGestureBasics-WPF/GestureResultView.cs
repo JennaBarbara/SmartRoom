@@ -212,8 +212,9 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
         /// <param name="isBodyTrackingIdValid">True, if the body associated with the GestureResultView object is still being tracked</param>
         /// <param name="isGestureDetected">True, if the discrete gesture is currently detected for the associated body</param>
         /// <param name="detectionConfidence">Confidence value for detection of the discrete gesture</param>
-        public void UpdateGestureResult(bool isBodyTrackingIdValid, bool isLeftGestureDetected, float LeftdetectionConfidence, bool isRightGestureDetected, float RightdetectionConfidence)
+        public void UpdateGestureResult(bool isBodyTrackingIdValid,string[] gestureName, bool[] gestureDetected, float[] gestureConfidence)
         {
+            int i;
             this.IsTracked = isBodyTrackingIdValid;
             this.Confidence = 0.0f;
 
@@ -225,19 +226,20 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             }
             else
             {
-                this.Detected = isLeftGestureDetected || isRightGestureDetected;
+                this.Detected = Array.Exists(gestureDetected,element => element == true);
                 this.BodyColor = this.trackedColors[this.BodyIndex];
 
                 if (this.Detected)
                 {
-                    if (isLeftGestureDetected){
-                        this.Gesture = "Left Hand Raised";
-                        this.Confidence = LeftdetectionConfidence;
-                        this.ImageSource = this.leftimage;}
-                    else if(isRightGestureDetected){
-                        this.Gesture = "Right Hand Raised";
-                        this.Confidence = RightdetectionConfidence;
-                        this.ImageSource = this.rightimage;}
+                    for (i = 0; i < gestureConfidence.Length; i++)
+                    {
+                        if (gestureDetected[i])
+                        {
+                            this.Gesture = gestureName[i];
+                            this.Confidence = gestureConfidence[i];
+                            this.ImageSource = this.leftimage;
+                        }
+                    }
                 }
                 else
                 {

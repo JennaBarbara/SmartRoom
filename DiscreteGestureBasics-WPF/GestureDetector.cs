@@ -15,15 +15,14 @@
     /// </summary>
     public class GestureDetector : IDisposable
     {
+
         /// <summary> Path to the gesture database that was trained with VGB </summary>
         private readonly string gestureDatabase = @"Database\November16.gbd";
-        int i;
-        /// <summary> Name of the discrete gesture in the database that we want to track </summary>
-        private readonly string rightGestureName = "HandRaised_Right";
-        private readonly string leftGestureName = "HandRaised_Left";
-       
-        
-       
+        static int gestureCount = 2;
+        /// <summary> the discrete gesture in the database that we want to track </summary>
+        string[] GestureNames = new string[gestureCount];
+        Boolean[] GestureDetected = new Boolean[gestureCount];
+        float[] GestureConfidence = new float[gestureCount];
 
         /// <summary> Gesture frame source which should be tied to a body tracking ID </summary>
         private VisualGestureBuilderFrameSource vgbFrameSource = null;
@@ -62,24 +61,13 @@
                 this.vgbFrameReader.FrameArrived += this.Reader_GestureFrameArrived;
             }
 
-            // load the 'Seated' gesture from the gesture database
+            GestureNames[0] = "HandRaised_Right";
+            GestureNames[1] = "HandRaised_Left";
+
+            // load the gestures from the gesture database. Can also load individual gestures as necessary. However for us, it isn't.
             using (VisualGestureBuilderDatabase database = new VisualGestureBuilderDatabase(this.gestureDatabase))
             {
-                // we could load all available gestures in the database with a call to vgbFrameSource.AddGestures(database.AvailableGestures), 
-                // but for this program, we only want to track one discrete gesture from the database, so we'll load it by name
-                foreach (Gesture gesture in database.AvailableGestures)
-                {
-
-                    if( gesture.Name.Equals(this.rightGestureName))
-                    {
-                        this.vgbFrameSource.AddGesture(gesture);
-                    }
-                    if (gesture.Name.Equals(this.leftGestureName))
-                    {
-                        this.vgbFrameSource.AddGesture(gesture);
-                    }
-                }
-                //vgbFrameSource.AddGestures(database.AvailableGestures);
+                vgbFrameSource.AddGestures(database.AvailableGestures);
             }
         }
 
@@ -178,41 +166,27 @@
 
                     if (discreteResults != null)
                     {
-                        Boolean leftdetected = false;
-                        Boolean rightdetected = false;
-                        float leftconfidence = 0.0f;
-                        float rightconfidence = 0.0f;
-                        // we only have one gesture in this source object, but you can get multiple gestures
+                        Array.Clear(GestureConfidence, 0, GestureConfidence.Length);
+                        Array.Clear(GestureDetected, 0, GestureDetected.Length);
+                        
                         foreach (Gesture gesture in this.vgbFrameSource.Gestures)
                         {
                             DiscreteGestureResult result = null;
                             discreteResults.TryGetValue(gesture, out result);
-
-                            
-                            if (gesture.Name.Equals(this.leftGestureName) && gesture.GestureType == GestureType.Discrete)
+                            int i = 0;
+                            for (i = 0; i < gestureCount;i++)
                             {
-                                leftdetected = result.Detected;
-                                leftconfidence = result.Confidence;
-                                //if (result != null)
-                                //{
+                                if(gesture.Name.Equals(GestureNames[i])&& gesture.GestureType == GestureType.Discrete)
+                                {
+                                    GestureDetected[i] = result.Detected;
+                                    GestureConfidence[i] = result.Confidence;
+                                }
+                            }
 
-                                    // update the GestureResultView object with new gesture result values
-                                    //this.GestureResultView.UpdateGestureResult(gesture.Name,true, result.Detected, result.Confidence);
-                                //}
-                            }
-                            if (gesture.Name.Equals(this.rightGestureName) && gesture.GestureType == GestureType.Discrete)
-                            {
-                                rightdetected = result.Detected;
-                                rightconfidence = result.Confidence;
-                                //if (result != null)
-                                //{
-                                    // update the GestureResultView object with new gesture result values
-                                    //this.GestureResultView.UpdateGestureResult(gesture.Name, true, result.Detected, result.Confidence);
-                                //}
-                            }
                             if (result != null)
-                                this.GestureResultView.UpdateGestureResult(true, leftdetected, leftconfidence, rightdetected, rightconfidence);
-                        }   
+                                this.GestureResultView.UpdateGestureResult(true, GestureNames, GestureDetected, GestureConfidence);
+                        }
+                        
                     }
                 }
             }
@@ -226,7 +200,7 @@
         private void Source_TrackingIdLost(object sender, TrackingIdLostEventArgs e)
         {
             // update the GestureResultView object to show the 'Not Tracked' image in the UI
-            this.GestureResultView.UpdateGestureResult(false,false,0.0f, false, 0.0f);
+            this.GestureResultView.UpdateGestureResult(false,GestureNames,GestureDetected,GestureConfidence);
         }
     }
 }

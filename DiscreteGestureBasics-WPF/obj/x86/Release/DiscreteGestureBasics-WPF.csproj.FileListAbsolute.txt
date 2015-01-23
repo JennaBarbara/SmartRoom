@@ -18,3 +18,4 @@ C:\Users\Evan\Desktop\Kinect\DiscreteGestureBasics-WPF\obj\x86\Release\ELEC490Pr
 C:\Users\Evan\Desktop\Kinect\DiscreteGestureBasics-WPF\obj\x86\Release\ELEC490Project.exe
 C:\Users\Evan\Desktop\Kinect\DiscreteGestureBasics-WPF\obj\x86\Release\ELEC490Project.pdb
 C:\Users\Evan\Desktop\Kinect\DiscreteGestureBasics-WPF\obj\x86\Release\DiscreteGestureBasics-WPF.csprojResolveAssemblyReference.cache
+C:\Users\Evan\Desktop\Kinect\DiscreteGestureBasics-WPF\bin\x86\Release\SmartSpace.exe.config
