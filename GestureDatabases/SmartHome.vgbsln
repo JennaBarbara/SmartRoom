@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<GestureBuilderFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<SolutionFile>
+		<Header>
+			<Date>2015-01-22</Date>
+			<Time>15:12:27.5737979-05:00</Time>
+			<Version>1</Version>
+			<Type>Solution</Type>
+			<ID>5576440b-266e-4d55-b781-4b6d20b452c0</ID>
+		</Header>
+		<Solution_Data>
+			<Files>
+				<Name />
+				<Content>
+					<Items>
+						<File>../../Documents/ArmsMovements/ArmDown_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ArmsMovements/ArmDown_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ArmsMovements/ArmIn_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ArmsMovements/ArmIn_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ArmsMovements/ArmOut_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ArmsMovements/ArmOut_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>ArmUp_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>ArmUp_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ArmsMovements/HandFrontClosed_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ArmsMovements/HandFrontClosed_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ArmsMovements/HandFrontOpen_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ArmsMovements/HandFrontOpen_Right.a.vgbproj</File>
+					</Items>
+				</Content>
+			</Files>
+		</Solution_Data>
+		<UI_State />
+		<Attributes />
+	</SolutionFile>
+</GestureBuilderFile>
