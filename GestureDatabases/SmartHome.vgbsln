@@ -2,8 +2,8 @@
 <GestureBuilderFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<SolutionFile>
 		<Header>
-			<Date>2015-01-22</Date>
-			<Time>15:12:27.5737979-05:00</Time>
+			<Date>2015-01-24</Date>
+			<Time>14:48:40.9561847-05:00</Time>
 			<Version>1</Version>
 			<Type>Solution</Type>
 			<ID>5576440b-266e-4d55-b781-4b6d20b452c0</ID>
@@ -37,6 +37,18 @@
 						<File>ArmUp_Right.a.vgbproj</File>
 					</Items>
 					<Items>
+						<File>../../Documents/ModeSelection/FistsTogether.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ModeSelection/FistsTogether.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ModeSelection/HandEar_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ModeSelection/HandEar_Right.a.vgbproj</File>
+					</Items>
+					<Items>
 						<File>../../Documents/ArmsMovements/HandFrontClosed_Right.vgbproj</File>
 					</Items>
 					<Items>
@@ -47,6 +59,30 @@
 					</Items>
 					<Items>
 						<File>../../Documents/ArmsMovements/HandFrontOpen_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/LightsAndHome/HandOnHead_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/LightsAndHome/HandOnHead_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ModeSelection/HandShoulder_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/ModeSelection/HandShoulder_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/LightsAndHome/HandUpClosed_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/LightsAndHome/HandUpClosed_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/LightsAndHome/HandUpOpen_Right.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/LightsAndHome/HandUpOpen_Right.a.vgbproj</File>
 					</Items>
 				</Content>
 			</Files>
