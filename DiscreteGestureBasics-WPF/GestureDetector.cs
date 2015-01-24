@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using Microsoft.Kinect;
     using Microsoft.Kinect.VisualGestureBuilder;
-    //using PowerUSB;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Gesture Detector class which listens for VisualGestureBuilderFrame events from the service
@@ -17,8 +17,8 @@
     {
 
         /// <summary> Path to the gesture database that was trained with VGB </summary>
-        private readonly string gestureDatabase = @"Database\November16.gbd";
-        static int gestureCount = 2;
+        private readonly string gestureDatabase = @"Database\SmartHome.gbd";
+        static int gestureCount = 12;
         /// <summary> the discrete gesture in the database that we want to track </summary>
         string[] GestureNames = new string[gestureCount];
         Boolean[] GestureDetected = new Boolean[gestureCount];
@@ -37,6 +37,7 @@
         /// <param name="gestureResultView">GestureResultView object to store gesture results of a single body to</param>
         public GestureDetector(KinectSensor kinectSensor, GestureResultView gestureResultView)
         {
+            USBControl.init();
             if (kinectSensor == null)
             {
                 throw new ArgumentNullException("kinectSensor");
@@ -61,8 +62,19 @@
                 this.vgbFrameReader.FrameArrived += this.Reader_GestureFrameArrived;
             }
 
-            GestureNames[0] = "HandRaised_Right";
-            GestureNames[1] = "HandRaised_Left";
+            GestureNames[0] = "ArmUp_Right";
+            GestureNames[1] = "ArmDown_Right";
+            GestureNames[2] = "ArmOut_Right";
+            GestureNames[3] = "ArmIn_Right";
+            GestureNames[4] = "HandFrontClosed_Right";
+            GestureNames[5] = "HandFrontOpen_Right";
+            GestureNames[6] = "HandUpOpen_Right";
+            GestureNames[7] = "HandUpClosed_Right";
+            GestureNames[8] = "HandEar_Right";
+            GestureNames[9] = "HandShoulder_Right";
+            GestureNames[10] = "HandOnHead_Right";
+            GestureNames[11] = "FistsTogether";
+
 
             // load the gestures from the gesture database. Can also load individual gestures as necessary. However for us, it isn't.
             using (VisualGestureBuilderDatabase database = new VisualGestureBuilderDatabase(this.gestureDatabase))
@@ -154,7 +166,8 @@
         /// <param name="e">event arguments</param>
         private void Reader_GestureFrameArrived(object sender, VisualGestureBuilderFrameArrivedEventArgs e)
         {
-            //USBControl.init();
+            
+            
 
             VisualGestureBuilderFrameReference frameReference = e.FrameReference;
             using (VisualGestureBuilderFrame frame = frameReference.AcquireFrame())
@@ -181,6 +194,7 @@
                                     GestureDetected[i] = result.Detected;
                                     GestureConfidence[i] = result.Confidence;
                                 }
+
                             }
 
                             if (result != null)

@@ -6,11 +6,13 @@
 
 namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
 {
+    using PowerUSB;
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using System.Media;
 
     /// <summary>
     /// Stores discrete gesture results for the GestureDetector.
@@ -49,6 +51,8 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
         private bool isTracked = false;
 
         private string gesture = "None";
+
+        private int PlugOn = 0;
         /// <summary>
         /// Initializes a new instance of the GestureResultView class and sets initial property values
         /// </summary>
@@ -215,6 +219,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
         public void UpdateGestureResult(bool isBodyTrackingIdValid,string[] gestureName, bool[] gestureDetected, float[] gestureConfidence)
         {
             int i;
+            SoundPlayer player = new SoundPlayer(); 
             this.IsTracked = isBodyTrackingIdValid;
             this.Confidence = 0.0f;
 
@@ -239,6 +244,21 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                             this.Confidence = gestureConfidence[i];
                             this.ImageSource = this.leftimage;
                         }
+                        if(this.Gesture == "ArmUp_Right" && PlugOn == 0)
+                        {
+                            PwrUSBWrapper.SetPortPowerUSB(0, 1, 0);
+                            PlugOn = 1;
+                                player.SoundLocation = "C:/Users/Evan/Music/Arctic Monkeys - Favourite Worst Nightmare/Brainstorm.wav";
+                                player.Play();
+                            //we were playing around. this works.
+                        }
+                        if (this.Gesture == "ArmDown_Right" && PlugOn == 1)
+                        {
+                            PwrUSBWrapper.SetPortPowerUSB(0, 0, 0);
+                            PlugOn = 0;
+                            player.Stop();
+                        }
+
                     }
                 }
                 else

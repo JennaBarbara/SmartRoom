@@ -9,7 +9,7 @@
         <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
         <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
         <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
-        
+
         <DataTemplate DataType="{x:Type local:GestureResultView}">
             <Grid Width="Auto" Margin="5" Background="{Binding BodyColor}">
                 <Grid.RowDefinitions>
@@ -25,16 +25,19 @@
                 <TextBlock Text="{Binding Gesture, StringFormat='Gesture: {0}'}" FontSize="18" FontFamily="Segoe UI" FontWeight="SemiBold" Grid.Row="3" Margin="5 0 0 0"/>
             </Grid>
         </DataTemplate>
-        
+
     </Window.Resources>
-    
+
     <Grid Margin="10 0 10 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Margin="0 0 -1 0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontFamily="Segoe UI" FontSize="18"><Run Text="ELEC 490 Demo"/><LineBreak/><Run Text="G"/><Run Text="roup 11"/></TextBlock>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontFamily="Segoe UI" FontSize="18"><Run Text="ELEC 490"/><LineBreak/><Run Text="G"/><Run Text="roup 11"/></TextBlock>
 
         <Grid x:Name="contentGrid" Margin="10,7,-10,35" Grid.Row="1" >
             <Grid.ColumnDefinitions>
@@ -56,7 +59,7 @@
             </StackPanel>
         </Grid>
 
-        <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
+        <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}" Margin="0,0,0,0.4">
             <StatusBarItem Content="{Binding StatusText}" />
         </StatusBar>
     </Grid>

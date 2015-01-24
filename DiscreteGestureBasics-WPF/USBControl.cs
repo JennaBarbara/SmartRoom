@@ -13,7 +13,6 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
         public static void init()
         {
             int p1, p2, p3;
-            bool pause;
             int model, pwrUsbConnected=0;
             StringBuilder firmware = new StringBuilder(128);
             p1=p2=p3=0;
