@@ -52,7 +52,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
 
         private string gesture = "None";
 
-        private int PlugOn = 0;
+        private int Plug1On, Plug2On, temp, MusicOn = 0;
         /// <summary>
         /// Initializes a new instance of the GestureResultView class and sets initial property values
         /// </summary>
@@ -244,21 +244,43 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                             this.Confidence = gestureConfidence[i];
                             this.ImageSource = this.leftimage;
                         }
-                        if(this.Gesture == "ArmUp_Right" && PlugOn == 0)
+
+                        if(this.Gesture == "ArmUp_Right" && Plug1On == 0)
                         {
-                            PwrUSBWrapper.SetPortPowerUSB(0, 1, 0);
-                            PlugOn = 1;
-                                player.SoundLocation = "C:/Users/Evan/Music/Arctic Monkeys - Favourite Worst Nightmare/Brainstorm.wav";
-                                player.Play();
-                            //we were playing around. this works.
+                            temp = Plug2On;
+                            PwrUSBWrapper.SetPortPowerUSB(0, 1, temp);
+                            Plug1On = 1;
                         }
-                        if (this.Gesture == "ArmDown_Right" && PlugOn == 1)
+                        if (this.Gesture == "ArmDown_Right" && Plug1On == 1)
                         {
-                            PwrUSBWrapper.SetPortPowerUSB(0, 0, 0);
-                            PlugOn = 0;
+                            temp = Plug2On;
+                            PwrUSBWrapper.SetPortPowerUSB(0, 0, temp);
+                            Plug1On = 0;
+                            
+                        }
+                        if (this.Gesture == "ArmOut_Right" && Plug2On == 0)
+                        {
+                            temp = Plug1On;
+                            PwrUSBWrapper.SetPortPowerUSB(0, temp, 1);
+                            Plug2On = 1;
+                        }
+                        if (this.Gesture == "ArmIn_Right" && Plug2On == 1)
+                        {
+                            temp = Plug1On;
+                            PwrUSBWrapper.SetPortPowerUSB(0, temp, 0);
+                            Plug2On = 0;
+                        }
+                        if (this.Gesture == "HandEar_Right" && MusicOn == 0)
+                        {
+                            MusicOn=1;
+                            player.SoundLocation ="C:/Users/Evan/Downloads/GiveItUp.wav";
+                            player.Play();
+                        }
+                        if(this.Gesture == "FistsTogether" && MusicOn == 1)
+                        {
+                            MusicOn = 0;
                             player.Stop();
                         }
-
                     }
                 }
                 else
