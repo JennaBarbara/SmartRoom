@@ -8,6 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Runtime.InteropServices;
+    using System.Media;
 
     /// <summary>
     /// Gesture Detector class which listens for VisualGestureBuilderFrame events from the service
@@ -20,9 +21,15 @@
         private readonly string gestureDatabase = @"Database\SmartHome.gbd";
         static int gestureCount = 12;
         /// <summary> the discrete gesture in the database that we want to track </summary>
-        string[] GestureNames = new string[gestureCount];
-        Boolean[] GestureDetected = new Boolean[gestureCount];
-        float[] GestureConfidence = new float[gestureCount];
+        string[,] GestureNames = new string[4,9];
+        Boolean[,] GestureDetected = new Boolean[4,9];
+        float[,] GestureConfidence = new float[4,9];
+        static Boolean[] elementsActive = new Boolean[5];
+        public static int state = 0;
+        //static int previousstate = 0;
+        static string currentgesture;
+        static Boolean currentDetected = false;
+        static float currentConfidence = 0;
 
         /// <summary> Gesture frame source which should be tied to a body tracking ID </summary>
         private VisualGestureBuilderFrameSource vgbFrameSource = null;
@@ -38,6 +45,7 @@
         public GestureDetector(KinectSensor kinectSensor, GestureResultView gestureResultView)
         {
             USBControl.init();
+            SoundPlayer player = new SoundPlayer();
             if (kinectSensor == null)
             {
                 throw new ArgumentNullException("kinectSensor");
@@ -61,20 +69,43 @@
                 this.vgbFrameReader.IsPaused = true;
                 this.vgbFrameReader.FrameArrived += this.Reader_GestureFrameArrived;
             }
+            //BASE CASE
+            GestureNames[0,0] = "HandShoulder_Right";
+            GestureNames[0,1] = "HandUpClosed_Right";
+            GestureNames[0,2] = "HandUpOpen_Right";
+            GestureNames[0,3] = "HandEar_Right";
+            GestureNames[0,4] = "FistsTogether";
 
-            GestureNames[0] = "ArmUp_Right";
-            GestureNames[1] = "ArmDown_Right";
-            GestureNames[2] = "ArmOut_Right";
-            GestureNames[3] = "ArmIn_Right";
-            GestureNames[4] = "HandFrontClosed_Right";
-            GestureNames[5] = "HandFrontOpen_Right";
-            GestureNames[6] = "HandUpOpen_Right";
-            GestureNames[7] = "HandUpClosed_Right";
-            GestureNames[8] = "HandEar_Right";
-            GestureNames[9] = "HandShoulder_Right";
-            GestureNames[10] = "HandOnHead_Right";
-            GestureNames[11] = "FistsTogether";
+            //CLIMATE
+            GestureNames[1,0] = "ArmDown_Right";
+            GestureNames[1,1] = "ArmUp_Right";
+            GestureNames[1,2] = "HandFrontOpen_Right";
+            GestureNames[1,3] = "HandFrontClosed_Right";
+            GestureNames[1,4] = "HandUpOpen_Right";
+            GestureNames[1,5] = "HandUpClosed_Right";
+            GestureNames[1,6] = "HandOnHead_Right";
 
+            //MUSIC
+            GestureNames[2, 0] = "ArmDown_Right";
+            GestureNames[2, 1] = "ArmUp_Right";
+            GestureNames[2, 2] = "HandFrontOpen_Right";
+            GestureNames[2, 3] = "HandFrontClosed_Right";
+            GestureNames[2, 4] = "HandUpOpen_Right";
+            GestureNames[2, 5] = "HandUpClosed_Right";
+            GestureNames[2, 6] = "HandOnHead_Right";
+            GestureNames[2, 7] = "ArmIn_Right";
+            GestureNames[2, 8] = "ArmOut_Right";
+
+            //TELEVISION
+            GestureNames[3, 0] = "ArmDown_Right";
+            GestureNames[3, 1] = "ArmUp_Right";
+            GestureNames[3, 2] = "HandFrontOpen_Right";
+            GestureNames[3, 3] = "HandFrontClosed_Right";
+            GestureNames[3, 4] = "HandUpOpen_Right";
+            GestureNames[3, 5] = "HandUpClosed_Right";
+            GestureNames[3, 6] = "HandOnHead_Right";
+            GestureNames[3, 7] = "ArmIn_Right";
+            GestureNames[3, 8] = "ArmOut_Right";
 
             // load the gestures from the gesture database. Can also load individual gestures as necessary. However for us, it isn't.
             using (VisualGestureBuilderDatabase database = new VisualGestureBuilderDatabase(this.gestureDatabase))
@@ -166,9 +197,6 @@
         /// <param name="e">event arguments</param>
         private void Reader_GestureFrameArrived(object sender, VisualGestureBuilderFrameArrivedEventArgs e)
         {
-            
-            
-
             VisualGestureBuilderFrameReference frameReference = e.FrameReference;
             using (VisualGestureBuilderFrame frame = frameReference.AcquireFrame())
             {
@@ -176,7 +204,6 @@
                 {
                     // get the discrete gesture results which arrived with the latest frame
                     IReadOnlyDictionary<Gesture, DiscreteGestureResult> discreteResults = frame.DiscreteGestureResults;
-
                     if (discreteResults != null)
                     {
                         Array.Clear(GestureConfidence, 0, GestureConfidence.Length);
@@ -184,21 +211,131 @@
                         
                         foreach (Gesture gesture in this.vgbFrameSource.Gestures)
                         {
+                            currentConfidence = 0;
                             DiscreteGestureResult result = null;
                             discreteResults.TryGetValue(gesture, out result);
                             int i = 0;
-                            for (i = 0; i < gestureCount;i++)
+                            int index=0;
+                            for (i = 0; i < 9; i++)
                             {
-                                if(gesture.Name.Equals(GestureNames[i])&& gesture.GestureType == GestureType.Discrete)
+                                if (gesture.Name.Equals(GestureNames[state, i]) && gesture.GestureType == GestureType.Discrete)
                                 {
-                                    GestureDetected[i] = result.Detected;
-                                    GestureConfidence[i] = result.Confidence;
+                                    GestureDetected[state, i] = result.Detected;
+                                    GestureConfidence[state, i] = result.Confidence;
                                 }
-
                             }
 
+                            for (i = 0; i < 9;i++)
+                            {
+                                if(GestureConfidence[state,i] > currentConfidence)
+                                {
+                                    currentConfidence = GestureConfidence[state, i];
+                                    index = i;
+                                }
+                            }
+                            currentDetected = GestureDetected[state, index];
+                            currentgesture = GestureNames[state, index];
+                            if (currentConfidence != 0)
+                            {
+                                if (state == 0)
+                                {
+
+                                    if (currentgesture == "HandShoulder_Right")
+                                    {
+                                        state = 1;
+                                    }
+                                    else if (currentgesture == "HandEar_Right")
+                                    {
+                                        state = 2;
+                                    }
+                                    else if (currentgesture == "FistsTogether")
+                                    {
+                                        state = 3;
+                                    }
+                                    else if (currentgesture == "HandUpClosed_Right")
+                                    {
+                                        //turn light off
+                                    }
+                                    else if (currentgesture == "HandUpOpen_Right")
+                                    {
+                                        //turn light on
+                                    }
+                                }
+                                else if (state == 1)
+                                {
+
+                                    if (currentgesture == "ArmDown_Right")
+                                    { }
+                                    else if (currentgesture == "ArmUp_Right")
+                                    { }
+                                    else if (currentgesture == "HandFrontOpen_Right")
+                                    { }
+                                    else if (currentgesture == "HandFrontClosed_Right")
+                                    { }
+                                    else if (currentgesture == "HandUpOpen_Right")
+                                    { }
+                                    else if (currentgesture == "HandUpClosed_Right")
+                                    { }
+                                    else if (currentgesture == "HandOnHead_Right")
+                                    {
+                                        state = 0;
+                                    }
+                                }
+                                else if (state == 2)
+                                {
+
+                                    if (currentgesture == "ArmDown_Right")
+                                    { }
+                                    else if (currentgesture == "ArmUp_Right")
+                                    { }
+                                    else if (currentgesture == "HandFrontOpen_Right")
+                                    { }
+                                    else if (currentgesture == "HandFrontClosed_Right")
+                                    { }
+                                    else if (currentgesture == "HandUpOpen_Right")
+                                    { }
+                                    else if (currentgesture == "HandUpClosed_Right")
+                                    { }
+                                    else if (currentgesture == "HandOnHead_Right")
+                                    {
+                                        state = 0;
+                                    }
+                                    else if (currentgesture == "ArmIn_Right")
+                                    {
+                                    }
+                                    else if (currentgesture == "ArmOut_Right")
+                                    { }
+                                }
+                                else if (state == 3)
+                                {
+                                    if (currentgesture == "ArmDown_Right")
+                                    { }
+                                    else if (currentgesture == "ArmUp_Right")
+                                    { }
+                                    else if (currentgesture == "HandFrontOpen_Right")
+                                    { }
+                                    else if (currentgesture == "HandFrontClosed_Right")
+                                    { }
+                                    else if (currentgesture == "HandUpOpen_Right")
+                                    { }
+                                    else if (currentgesture == "HandUpClosed_Right")
+                                    { }
+                                    else if (currentgesture == "HandOnHead_Right")
+                                    {
+                                        state = 0;
+                                    }
+                                    else if (currentgesture == "ArmIn_Right")
+                                    {
+                                    }
+                                    else if (currentgesture == "ArmOut_Right")
+                                    { }
+                                }
+                            }
+                            
                             if (result != null)
-                                this.GestureResultView.UpdateGestureResult(true, GestureNames, GestureDetected, GestureConfidence);
+                            {
+                                this.GestureResultView.UpdateGestureResult(true, state, currentgesture, currentDetected, currentConfidence);
+                            }
                         }
                         
                     }
@@ -214,7 +351,7 @@
         private void Source_TrackingIdLost(object sender, TrackingIdLostEventArgs e)
         {
             // update the GestureResultView object to show the 'Not Tracked' image in the UI
-            this.GestureResultView.UpdateGestureResult(false,GestureNames,GestureDetected,GestureConfidence);
+            this.GestureResultView.UpdateGestureResult(false,state,currentgesture,currentDetected,currentConfidence);
         }
     }
 }
