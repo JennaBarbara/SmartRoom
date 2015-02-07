@@ -1,5 +1,6 @@
 ﻿namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
 {
+    using PowerUSB;
     using System;
     using System.Collections.Generic;
     using Microsoft.Kinect;
@@ -26,6 +27,11 @@
         float[,] GestureConfidence = new float[4,9];
         static Boolean[] elementsActive = new Boolean[5];
         public static int state = 0;
+        public int pwrS1 = 0;
+        public int pwrS2 = 0;
+        public int pwrS3 = 0;
+
+
         //static int previousstate = 0;
         static string currentgesture;
         static Boolean currentDetected = false;
@@ -46,6 +52,7 @@
         {
             USBControl.init();
             SoundPlayer player = new SoundPlayer();
+            PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
             if (kinectSensor == null)
             {
                 throw new ArgumentNullException("kinectSensor");
@@ -84,6 +91,8 @@
             GestureNames[1,4] = "HandUpOpen_Right";
             GestureNames[1,5] = "HandUpClosed_Right";
             GestureNames[1,6] = "HandOnHead_Right";
+            GestureNames[1, 7] = "ArmIn_Right";
+            GestureNames[1, 8] = "ArmOut_Right";
 
             //MUSIC
             GestureNames[2, 0] = "ArmDown_Right";
@@ -123,6 +132,7 @@
         /// </summary>
         public ulong TrackingId
         {
+           
             get
             {
                 return this.vgbFrameSource.TrackingId;
@@ -198,6 +208,7 @@
         private void Reader_GestureFrameArrived(object sender, VisualGestureBuilderFrameArrivedEventArgs e)
         {
             VisualGestureBuilderFrameReference frameReference = e.FrameReference;
+
             using (VisualGestureBuilderFrame frame = frameReference.AcquireFrame())
             {
                 if (frame != null)
@@ -237,6 +248,7 @@
                             currentgesture = GestureNames[state, index];
                             if (currentConfidence != 0)
                             {
+                            
                                 if (state == 0)
                                 {
 
@@ -252,30 +264,73 @@
                                     {
                                         state = 3;
                                     }
-                                    else if (currentgesture == "HandUpClosed_Right")
+                                    else if (currentgesture == "HandUpClosed_Right" && pwrS1 == 1)
                                     {
                                         //turn light off
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS1 = 0;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+                                       
                                     }
-                                    else if (currentgesture == "HandUpOpen_Right")
+                                    else if (currentgesture == "HandUpOpen_Right" && pwrS1 == 0)
                                     {
                                         //turn light on
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS1 = 1;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
                                     }
                                 }
-                                else if (state == 1)
+                                else if (state == 1)  //Climate 
                                 {
 
-                                    if (currentgesture == "ArmDown_Right")
+                                    if (currentgesture == "ArmDown_Right")  // Temp Down
                                     { }
-                                    else if (currentgesture == "ArmUp_Right")
+                                    else if (currentgesture == "ArmUp_Right") // Temp Up
                                     { }
-                                    else if (currentgesture == "HandFrontOpen_Right")
-                                    { }
-                                    else if (currentgesture == "HandFrontClosed_Right")
-                                    { }
-                                    else if (currentgesture == "HandUpOpen_Right")
-                                    { }
-                                    else if (currentgesture == "HandUpClosed_Right")
-                                    { }
+                                    else if (currentgesture == "HandFrontOpen_Right" && pwrS2 == 0) // Fan On
+                                    {
+                                        //turn fan on
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS2 = 1;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+
+                                    }
+                                    else if (currentgesture == "HandFrontClosed_Right" && pwrS2 == 1) // Fan Off
+                                    {
+                                        //turn fan off
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS2 = 0;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+                                    }
+                                    else if (currentgesture == "HandUpClosed_Right" && pwrS1 == 1)
+                                    {
+                                        //turn light off
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS1 = 0;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+
+                                    }
+                                    else if (currentgesture == "HandUpOpen_Right" && pwrS1 == 0)
+                                    {
+                                        //turn light on
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS1 = 1;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+                                    }
+                                    else if (currentgesture == "ArmIn_Right" && pwrS3 == 1)
+                                    {
+                                        //Turn Light 2 (Plug 3) Off
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS3 = 0;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+                                    }
+                                    else if (currentgesture == "ArmOut_Right" && pwrS3 == 0)
+                                    {
+                                        //Turn Light 2 (Plug 3) On
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS3 = 1;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, 1);
+                                    }
                                     else if (currentgesture == "HandOnHead_Right")
                                     {
                                         state = 0;
@@ -292,10 +347,21 @@
                                     { }
                                     else if (currentgesture == "HandFrontClosed_Right")
                                     { }
-                                    else if (currentgesture == "HandUpOpen_Right")
-                                    { }
-                                    else if (currentgesture == "HandUpClosed_Right")
-                                    { }
+                                    else if (currentgesture == "HandUpClosed_Right" && pwrS1 == 1)
+                                    {
+                                        //turn light off
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS1 = 0;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+
+                                    }
+                                    else if (currentgesture == "HandUpOpen_Right" && pwrS1 == 0)
+                                    {
+                                        //turn light on
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS1 = 1;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+                                    }
                                     else if (currentgesture == "HandOnHead_Right")
                                     {
                                         state = 0;
@@ -316,10 +382,21 @@
                                     { }
                                     else if (currentgesture == "HandFrontClosed_Right")
                                     { }
-                                    else if (currentgesture == "HandUpOpen_Right")
-                                    { }
-                                    else if (currentgesture == "HandUpClosed_Right")
-                                    { }
+                                    else if (currentgesture == "HandUpClosed_Right" && pwrS1 == 1)
+                                    {
+                                        //turn light off
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS1 = 0;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+
+                                    }
+                                    else if (currentgesture == "HandUpOpen_Right" && pwrS1 == 0)
+                                    {
+                                        //turn light on
+                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
+                                        pwrS1 = 1;
+                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
+                                    }
                                     else if (currentgesture == "HandOnHead_Right")
                                     {
                                         state = 0;
@@ -331,6 +408,7 @@
                                     { }
                                 }
                             }
+                            Console.WriteLine(state);
                             
                             if (result != null)
                             {
