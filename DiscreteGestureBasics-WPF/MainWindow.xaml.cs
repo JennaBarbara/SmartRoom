@@ -63,6 +63,8 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
                                                             : Properties.Resources.NoSensorStatusText;
 
+            int state = GestureDetector.state;
+
             // open the reader for the body frames
             this.bodyFrameReader = this.kinectSensor.BodyFrameSource.OpenReader();
 

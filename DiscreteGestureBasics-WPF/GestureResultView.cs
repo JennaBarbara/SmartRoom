@@ -216,10 +216,9 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
         /// <param name="isBodyTrackingIdValid">True, if the body associated with the GestureResultView object is still being tracked</param>
         /// <param name="isGestureDetected">True, if the discrete gesture is currently detected for the associated body</param>
         /// <param name="detectionConfidence">Confidence value for detection of the discrete gesture</param>
-        public void UpdateGestureResult(bool isBodyTrackingIdValid,string[] gestureName, bool[] gestureDetected, float[] gestureConfidence)
-        {
-            int i;
-            SoundPlayer player = new SoundPlayer(); 
+        public void UpdateGestureResult(bool isBodyTrackingIdValid,int state, string gestureName, bool gestureDetected, float gestureConfidence)
+        { 
+             
             this.IsTracked = isBodyTrackingIdValid;
             this.Confidence = 0.0f;
 
@@ -231,57 +230,14 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             }
             else
             {
-                this.Detected = Array.Exists(gestureDetected,element => element == true);
+               // this.Detected = //fix this!!! //Array.Exists(gestureDetected,element => element == true);
                 this.BodyColor = this.trackedColors[this.BodyIndex];
-
+                this.detected = gestureDetected;
                 if (this.Detected)
                 {
-                    for (i = 0; i < gestureConfidence.Length; i++)
-                    {
-                        if (gestureDetected[i])
-                        {
-                            this.Gesture = gestureName[i];
-                            this.Confidence = gestureConfidence[i];
-                            this.ImageSource = this.leftimage;
-                        }
-
-                        if(this.Gesture == "ArmUp_Right" && Plug1On == 0)
-                        {
-                            temp = Plug2On;
-                            PwrUSBWrapper.SetPortPowerUSB(0, 1, temp);
-                            Plug1On = 1;
-                        }
-                        if (this.Gesture == "ArmDown_Right" && Plug1On == 1)
-                        {
-                            temp = Plug2On;
-                            PwrUSBWrapper.SetPortPowerUSB(0, 0, temp);
-                            Plug1On = 0;
-                            
-                        }
-                        if (this.Gesture == "ArmOut_Right" && Plug2On == 0)
-                        {
-                            temp = Plug1On;
-                            PwrUSBWrapper.SetPortPowerUSB(0, temp, 1);
-                            Plug2On = 1;
-                        }
-                        if (this.Gesture == "ArmIn_Right" && Plug2On == 1)
-                        {
-                            temp = Plug1On;
-                            PwrUSBWrapper.SetPortPowerUSB(0, temp, 0);
-                            Plug2On = 0;
-                        }
-                        if (this.Gesture == "HandEar_Right" && MusicOn == 0)
-                        {
-                            MusicOn=1;
-                            player.SoundLocation ="C:/Users/Evan/Downloads/GiveItUp.wav";
-                            player.Play();
-                        }
-                        if(this.Gesture == "FistsTogether" && MusicOn == 1)
-                        {
-                            MusicOn = 0;
-                            player.Stop();
-                        }
-                    }
+                    this.Gesture = gestureName;
+                    this.Confidence = gestureConfidence;
+                    this.ImageSource = this.leftimage;
                 }
                 else
                 {
