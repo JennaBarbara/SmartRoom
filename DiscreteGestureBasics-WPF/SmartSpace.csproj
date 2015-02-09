@@ -154,9 +154,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\Music\3005.wav" />
+    <Content Include="Database\Music\Brainstorm.wav" />
+    <Content Include="Database\Music\DoIWannaKnow.wav" />
+    <Content Include="Database\Music\GetLucky.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Database\Music\Heartbeat.mp3" />
+    <Content Include="Database\Music\High.wav" />
+    <Content Include="Database\Music\LonelyBoy.wav" />
+    <Content Include="Database\Music\Riptide.wav" />
     <Content Include="Database\Seated.gbd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Database\Music\SnapOut.wav" />
+    <Content Include="Database\Music\Suburbs.wav" />
     <Content Include="Images\PwrUSBDll.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -19,10 +19,10 @@ C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Relea
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\SmartSpace.pdb
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\Database\SmartHome.gbd
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\Database\SmartHome.vgbsln
-C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\SmartSpace.csprojResolveAssemblyReference.cache
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\Images\PwrUSBDll.dll
 C:\Users\Liam\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\SmartSpace.exe.config
 C:\Users\Liam\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\SmartSpace.exe
 C:\Users\Liam\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\SmartSpace.pdb
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\Interop.WMPLib.dll
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\SmartSpace.csproj.ResolveComReference.cache
+C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\Database\Music\GetLucky.wav

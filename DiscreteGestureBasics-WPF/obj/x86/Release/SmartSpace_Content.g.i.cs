@@ -8,7 +8,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/3005.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/brainstorm.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/doiwannaknow.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/getlucky.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/heartbeat.mp3")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/high.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/lonelyboy.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/riptide.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/seated.gbd")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/snapout.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/suburbs.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/pwrusbdll.dll")]
 
 

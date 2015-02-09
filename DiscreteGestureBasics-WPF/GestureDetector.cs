@@ -33,8 +33,10 @@
         DateTime time = new DateTime();
         DateTime newTime = new DateTime();
         double elapsed;
+        string[] SongLocations = new string[9];
         int Song = 0;
-
+        int SongPlaying = 0;
+        SoundPlayer Music = new SoundPlayer();
         //static int previousstate = 0;
         static string currentgesture;
         static Boolean currentDetected = false;
@@ -54,7 +56,7 @@
         public GestureDetector(KinectSensor kinectSensor, GestureResultView gestureResultView)
         {
             USBControl.init();
-            SoundPlayer music = new SoundPlayer();
+            
             PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
             if (kinectSensor == null)
             {
@@ -118,6 +120,17 @@
             GestureNames[3, 6] = "HandOnHead_Right";
             GestureNames[3, 7] = "ArmIn_Right";
             GestureNames[3, 8] = "ArmOut_Right";
+
+            SongLocations[0] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/3005.wav";
+            SongLocations[1] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Brainstorm.wav";
+            SongLocations[2] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/DoIWannaKnow.wav";
+            SongLocations[3] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/GetLucky.wav";
+            SongLocations[4] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/High.wav";
+            SongLocations[5] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/LonelyBoy.wav";
+            SongLocations[6] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Riptide.wav";
+            SongLocations[7] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/SnapOut.wav";
+            SongLocations[8] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Suburbs.wav";
+
 
             // load the gestures from the gesture database. Can also load individual gestures as necessary. However for us, it isn't.
             using (VisualGestureBuilderDatabase database = new VisualGestureBuilderDatabase(this.gestureDatabase))
@@ -253,7 +266,7 @@
                             }
                             currentDetected = GestureDetected[state, index];
                             currentgesture = GestureNames[state, index];
-                            if (currentConfidence != 0 && elapsed > 3)
+                            if (currentConfidence != 0 && elapsed > 1)
                             {
                                 time = DateTime.Now;
                                 if (state == 0)
@@ -266,6 +279,7 @@
                                     else if (currentgesture == "HandEar_Right")
                                     {
                                         state = 2;
+
                                     }
                                     else if (currentgesture == "FistsTogether")
                                     {
@@ -350,10 +364,17 @@
                                     { }
                                     else if (currentgesture == "ArmUp_Right")
                                     { }
-                                    else if (currentgesture == "HandFrontOpen_Right")
-                                    { }
-                                    else if (currentgesture == "HandFrontClosed_Right")
-                                    { }
+                                    else if (currentgesture == "HandFrontOpen_Right" && SongPlaying ==0)
+                                    {
+                                        Music.SoundLocation = SongLocations[Song];
+                                        Music.Play();
+                                        SongPlaying = 1;
+                                    }
+                                    else if (currentgesture == "HandFrontClosed_Right" && SongPlaying ==1)
+                                    {
+                                        Music.Stop();
+                                        SongPlaying = 0;
+                                    }
                                     else if (currentgesture == "HandUpClosed_Right" && pwrS1 == 1)
                                     {
                                         //turn light off
@@ -373,12 +394,22 @@
                                     {
                                         state = 0;
                                     }
-                                    else if (currentgesture == "ArmIn_Right")
+                                    else if (currentgesture == "ArmIn_Right" && SongPlaying ==1)
                                     {
-                                        
+                                        Song = Song + 1;
+                                        if (Song > 8)
+                                            Song = 0;
+                                        Music.SoundLocation = SongLocations[Song];
+                                        Music.Play();
                                     }
-                                    else if (currentgesture == "ArmOut_Right")
-                                    { }
+                                    else if (currentgesture == "ArmOut_Right" && SongPlaying ==1)
+                                    {
+                                        Song = Song - 1;
+                                        if (Song < 0)
+                                            Song = 8;
+                                        Music.SoundLocation = SongLocations[Song];
+                                        Music.Play();
+                                    }
                                 }
                                 else if (state == 3)
                                 {
