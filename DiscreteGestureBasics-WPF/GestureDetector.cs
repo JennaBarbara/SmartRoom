@@ -30,7 +30,10 @@
         public int pwrS1 = 0;
         public int pwrS2 = 0;
         public int pwrS3 = 0;
-
+        DateTime time = new DateTime();
+        DateTime newTime = new DateTime();
+        double elapsed;
+        int Song = 0;
 
         //static int previousstate = 0;
         static string currentgesture;
@@ -51,7 +54,7 @@
         public GestureDetector(KinectSensor kinectSensor, GestureResultView gestureResultView)
         {
             USBControl.init();
-            SoundPlayer player = new SoundPlayer();
+            SoundPlayer music = new SoundPlayer();
             PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
             if (kinectSensor == null)
             {
@@ -227,8 +230,12 @@
                             discreteResults.TryGetValue(gesture, out result);
                             int i = 0;
                             int index=0;
+                            
                             for (i = 0; i < 9; i++)
                             {
+                                newTime = DateTime.Now;
+                                TimeSpan seconds = newTime-time;
+                                elapsed = seconds.TotalSeconds;
                                 if (gesture.Name.Equals(GestureNames[state, i]) && gesture.GestureType == GestureType.Discrete)
                                 {
                                     GestureDetected[state, i] = result.Detected;
@@ -246,9 +253,9 @@
                             }
                             currentDetected = GestureDetected[state, index];
                             currentgesture = GestureNames[state, index];
-                            if (currentConfidence != 0)
+                            if (currentConfidence != 0 && elapsed > 3)
                             {
-                            
+                                time = DateTime.Now;
                                 if (state == 0)
                                 {
 
@@ -368,6 +375,7 @@
                                     }
                                     else if (currentgesture == "ArmIn_Right")
                                     {
+                                        
                                     }
                                     else if (currentgesture == "ArmOut_Right")
                                     { }
@@ -408,7 +416,7 @@
                                     { }
                                 }
                             }
-                            Console.WriteLine(state);
+                            //Console.WriteLine("State: "+ state + "      Elapsed Time:" + elapsed);
                             
                             if (result != null)
                             {

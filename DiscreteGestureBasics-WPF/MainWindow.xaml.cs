@@ -63,8 +63,6 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
                                                             : Properties.Resources.NoSensorStatusText;
 
-            int state = GestureDetector.state;
-
             // open the reader for the body frames
             this.bodyFrameReader = this.kinectSensor.BodyFrameSource.OpenReader();
 
@@ -79,11 +77,11 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
 
             // initialize the MainWindow
             this.InitializeComponent();
-
+            
             // set our data context objects for display in UI
             this.DataContext = this;
             this.kinectBodyViewbox.DataContext = this.kinectBodyView;
-
+            
             // create a gesture detector for each body (6 bodies => 6 detectors) and create content controls to display results in the UI
             int col0Row = 0;
             int col1Row = 0;
@@ -92,7 +90,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             {
                 GestureResultView result = new GestureResultView("",i, false, false, 0.0f);
                 GestureDetector detector = new GestureDetector(this.kinectSensor, result);
-                this.gestureDetectorList.Add(detector);                
+                this.gestureDetectorList.Add(detector);
                 
                 // split gesture results across the first two columns of the content grid
                 ContentControl contentControl = new ContentControl();
@@ -225,7 +223,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             {
                 // visualize the new body data
                 this.kinectBodyView.UpdateBodyFrame(this.bodies);
-
+                CurrentState.Content = GestureDetector.state;
                 // we may have lost/acquired bodies, so update the corresponding gesture detectors
                 if (this.bodies != null)
                 {
