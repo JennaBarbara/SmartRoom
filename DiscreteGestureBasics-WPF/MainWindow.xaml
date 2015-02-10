@@ -57,7 +57,7 @@
                 </Viewbox>
                 <TextBlock Text="Kinect Event Detection" TextWrapping="Wrap" Margin="5 10 5 5" Foreground="{StaticResource MediumGreyBrush}" FontFamily="Segoe UI" FontSize="14"/>
             </StackPanel>
-            <Label x:Name="CurrentState" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="203.6,-51,0,0" VerticalAlignment="Top" Width="100" FontSize="24"/>
+            <Label x:Name="CurrentState" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="261.6,111.8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100"/>
         </Grid>
 
         <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}" Margin="0,0,0,0.4">
