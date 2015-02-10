@@ -151,15 +151,16 @@
            
             get
             {
-                return this.vgbFrameSource.TrackingId;
+                return 0;//this.vgbFrameSource.TrackingId;
             }
 
             set
             {
-                if (this.vgbFrameSource.TrackingId != value)
-                {
-                    this.vgbFrameSource.TrackingId = value;
-                }
+                this.vgbFrameSource.TrackingId = 0;
+               // if (this.vgbFrameSource.TrackingId != value)
+                //{
+                 //   this.vgbFrameSource.TrackingId = value;
+                //}
             }
         }
 
