@@ -20,27 +20,16 @@
 
         /// <summary> Path to the gesture database that was trained with VGB </summary>
         private readonly string gestureDatabase = @"Database\SmartHome.gbd";
-        static int gestureCount = 12;
         /// <summary> the discrete gesture in the database that we want to track </summary>
-        string[,] GestureNames = new string[4,9];
-        Boolean[,] GestureDetected = new Boolean[4,9];
-        float[,] GestureConfidence = new float[4,9];
-        static Boolean[] elementsActive = new Boolean[5];
-        public static int state = 0;
-        public int pwrS1 = 0;
-        public int pwrS2 = 0;
-        public int pwrS3 = 0;
-        DateTime time = new DateTime();
-        DateTime newTime = new DateTime();
-        double elapsed;
-        string[] SongLocations = new string[9];
-        int Song = 0;
-        int SongPlaying = 0;
-        SoundPlayer Music = new SoundPlayer();
-        //static int previousstate = 0;
-        static string currentgesture;
-        static Boolean currentDetected = false;
-        static float currentConfidence = 0;
+        string[,] GestureNames = new string[5,9];
+        Boolean[,] GestureDetected = new Boolean[5,9];
+        float[,] GestureConfidence = new float[5,9];
+
+       
+
+        public string currentgesture;
+        public Boolean currentDetected = false;
+        public float currentConfidence = 0;
 
         /// <summary> Gesture frame source which should be tied to a body tracking ID </summary>
         private VisualGestureBuilderFrameSource vgbFrameSource = null;
@@ -55,9 +44,7 @@
         /// <param name="gestureResultView">GestureResultView object to store gesture results of a single body to</param>
         public GestureDetector(KinectSensor kinectSensor, GestureResultView gestureResultView)
         {
-            USBControl.init();
             
-            PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
             if (kinectSensor == null)
             {
                 throw new ArgumentNullException("kinectSensor");
@@ -121,15 +108,10 @@
             GestureNames[3, 7] = "ArmIn_Right";
             GestureNames[3, 8] = "ArmOut_Right";
 
-            SongLocations[0] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/3005.wav";
-            SongLocations[1] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Brainstorm.wav";
-            SongLocations[2] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/DoIWannaKnow.wav";
-            SongLocations[3] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/GetLucky.wav";
-            SongLocations[4] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/High.wav";
-            SongLocations[5] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/LonelyBoy.wav";
-            SongLocations[6] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Riptide.wav";
-            SongLocations[7] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/SnapOut.wav";
-            SongLocations[8] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Suburbs.wav";
+            GestureNames[4, 0] = "ArmUp_Left";
+            GestureNames[4, 1] = "ArmDown_Left";
+
+            
 
 
             // load the gestures from the gesture database. Can also load individual gestures as necessary. However for us, it isn't.
@@ -243,12 +225,10 @@
                             discreteResults.TryGetValue(gesture, out result);
                             int i = 0;
                             int index=0;
+                            int state = MainWindow.state;
                             
                             for (i = 0; i < 9; i++)
                             {
-                                newTime = DateTime.Now;
-                                TimeSpan seconds = newTime-time;
-                                elapsed = seconds.TotalSeconds;
                                 if (gesture.Name.Equals(GestureNames[state, i]) && gesture.GestureType == GestureType.Discrete)
                                 {
                                     GestureDetected[state, i] = result.Detected;
@@ -266,192 +246,10 @@
                             }
                             currentDetected = GestureDetected[state, index];
                             currentgesture = GestureNames[state, index];
-                            if (currentConfidence != 0 && elapsed > 1)
-                            {
-                                time = DateTime.Now;
-                                if (state == 0)
-                                {
-
-                                    if (currentgesture == "HandShoulder_Right")
-                                    {
-                                        state = 1;
-                                    }
-                                    else if (currentgesture == "HandEar_Right")
-                                    {
-                                        state = 2;
-
-                                    }
-                                    else if (currentgesture == "FistsTogether")
-                                    {
-                                        state = 3;
-                                    }
-                                    else if (currentgesture == "HandUpClosed_Right" && pwrS1 == 1)
-                                    {
-                                        //turn light off
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS1 = 0;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-                                       
-                                    }
-                                    else if (currentgesture == "HandUpOpen_Right" && pwrS1 == 0)
-                                    {
-                                        //turn light on
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS1 = 1;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-                                    }
-                                }
-                                else if (state == 1)  //Climate 
-                                {
-
-                                    if (currentgesture == "ArmDown_Right")  // Temp Down
-                                    { }
-                                    else if (currentgesture == "ArmUp_Right") // Temp Up
-                                    { }
-                                    else if (currentgesture == "HandFrontOpen_Right" && pwrS2 == 0) // Fan On
-                                    {
-                                        //turn fan on
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS2 = 1;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-
-                                    }
-                                    else if (currentgesture == "HandFrontClosed_Right" && pwrS2 == 1) // Fan Off
-                                    {
-                                        //turn fan off
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS2 = 0;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-                                    }
-                                    else if (currentgesture == "HandUpClosed_Right" && pwrS1 == 1)
-                                    {
-                                        //turn light off
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS1 = 0;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-
-                                    }
-                                    else if (currentgesture == "HandUpOpen_Right" && pwrS1 == 0)
-                                    {
-                                        //turn light on
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS1 = 1;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-                                    }
-                                    else if (currentgesture == "ArmIn_Right" && pwrS3 == 1)
-                                    {
-                                        //Turn Light 2 (Plug 3) Off
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS3 = 0;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-                                    }
-                                    else if (currentgesture == "ArmOut_Right" && pwrS3 == 0)
-                                    {
-                                        //Turn Light 2 (Plug 3) On
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS3 = 1;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, 1);
-                                    }
-                                    else if (currentgesture == "HandOnHead_Right")
-                                    {
-                                        state = 0;
-                                    }
-                                }
-                                else if (state == 2)
-                                {
-
-                                    if (currentgesture == "ArmDown_Right")
-                                    { }
-                                    else if (currentgesture == "ArmUp_Right")
-                                    { }
-                                    else if (currentgesture == "HandFrontOpen_Right" && SongPlaying ==0)
-                                    {
-                                        Music.SoundLocation = SongLocations[Song];
-                                        Music.Play();
-                                        SongPlaying = 1;
-                                    }
-                                    else if (currentgesture == "HandFrontClosed_Right" && SongPlaying ==1)
-                                    {
-                                        Music.Stop();
-                                        SongPlaying = 0;
-                                    }
-                                    else if (currentgesture == "HandUpClosed_Right" && pwrS1 == 1)
-                                    {
-                                        //turn light off
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS1 = 0;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-
-                                    }
-                                    else if (currentgesture == "HandUpOpen_Right" && pwrS1 == 0)
-                                    {
-                                        //turn light on
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS1 = 1;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-                                    }
-                                    else if (currentgesture == "HandOnHead_Right")
-                                    {
-                                        state = 0;
-                                    }
-                                    else if (currentgesture == "ArmIn_Right" && SongPlaying ==1)
-                                    {
-                                        Song = Song + 1;
-                                        if (Song > 8)
-                                            Song = 0;
-                                        Music.SoundLocation = SongLocations[Song];
-                                        Music.Play();
-                                    }
-                                    else if (currentgesture == "ArmOut_Right" && SongPlaying ==1)
-                                    {
-                                        Song = Song - 1;
-                                        if (Song < 0)
-                                            Song = 8;
-                                        Music.SoundLocation = SongLocations[Song];
-                                        Music.Play();
-                                    }
-                                }
-                                else if (state == 3)
-                                {
-                                    if (currentgesture == "ArmDown_Right")
-                                    { }
-                                    else if (currentgesture == "ArmUp_Right")
-                                    { }
-                                    else if (currentgesture == "HandFrontOpen_Right")
-                                    { }
-                                    else if (currentgesture == "HandFrontClosed_Right")
-                                    { }
-                                    else if (currentgesture == "HandUpClosed_Right" && pwrS1 == 1)
-                                    {
-                                        //turn light off
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS1 = 0;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-
-                                    }
-                                    else if (currentgesture == "HandUpOpen_Right" && pwrS1 == 0)
-                                    {
-                                        //turn light on
-                                        PwrUSBWrapper.ReadPortStatePowerUSB(out pwrS1, out pwrS2, out pwrS3);
-                                        pwrS1 = 1;
-                                        PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
-                                    }
-                                    else if (currentgesture == "HandOnHead_Right")
-                                    {
-                                        state = 0;
-                                    }
-                                    else if (currentgesture == "ArmIn_Right")
-                                    {
-                                    }
-                                    else if (currentgesture == "ArmOut_Right")
-                                    { }
-                                }
-                            }
-                            //Console.WriteLine("State: "+ state + "      Elapsed Time:" + elapsed);
                             
                             if (result != null)
                             {
-                                this.GestureResultView.UpdateGestureResult(true, state, currentgesture, currentDetected, currentConfidence);
+                                this.GestureResultView.UpdateGestureResult(true, currentgesture, currentDetected, currentConfidence);
                             }
                         }
                         
@@ -468,7 +266,7 @@
         private void Source_TrackingIdLost(object sender, TrackingIdLostEventArgs e)
         {
             // update the GestureResultView object to show the 'Not Tracked' image in the UI
-            this.GestureResultView.UpdateGestureResult(false,state,currentgesture,currentDetected,currentConfidence);
+            this.GestureResultView.UpdateGestureResult(false,currentgesture,currentDetected,currentConfidence);
         }
     }
 }

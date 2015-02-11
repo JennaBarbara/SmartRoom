@@ -26,3 +26,7 @@ C:\Users\Liam\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Relea
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\Interop.WMPLib.dll
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\SmartSpace.csproj.ResolveComReference.cache
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\Database\Music\GetLucky.wav
+C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\MediaWindow.baml
+C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\MediaWindow.g.cs
+C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\Database\Videos\TheOffice.mp4
+C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\SmartSpace.csprojResolveAssemblyReference.cache

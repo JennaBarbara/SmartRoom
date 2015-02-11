@@ -1,0 +1,10 @@
+﻿<Window x:Class="Microsoft.Samples.Kinect.DiscreteGestureBasics.MediaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MediaWindow" Height="459.6" Width="770.4">
+    <Grid>
+        <Grid Margin="0,0,0,-10.4">
+            <MediaElement x:Name="Media" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" UnloadedBehavior="Manual" RenderTransformOrigin="0.5,0.5" IsMuted="True" LoadedBehavior="Manual" Stretch="UniformToFill" Source="C:/Users/Evan/Documents/GitHub/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/TheOffice.mp4" Margin="0,-10,0,10"/>
+        </Grid>
+    </Grid>
+</Window>
