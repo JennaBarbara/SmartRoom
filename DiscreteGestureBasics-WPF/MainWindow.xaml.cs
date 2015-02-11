@@ -56,8 +56,11 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
         public int pwrS2 = 0;
         public int pwrS3 = 0;
         string[] SongLocations = new string[9];
+        string[] VideoLocations = new string[6];
         int Song = 0;
         int SongPlaying = 0;
+        int Video = 0;
+        int VideoPlaying = 0;
         int Reading = 1;
         SoundPlayer Music = new SoundPlayer();
         private DateTime time = new DateTime();
@@ -79,6 +82,13 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             SongLocations[6] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Riptide.wav";
             SongLocations[7] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/SnapOut.wav";
             SongLocations[8] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Suburbs.wav";
+
+            VideoLocations[0] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/BustyBass.mp4";
+            VideoLocations[1] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/Habs.mp4";
+            VideoLocations[2] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/Kramer.mp4";
+            VideoLocations[3] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/StarWars.mp4";
+            VideoLocations[4] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/TheOffice.mp4";
+            VideoLocations[5] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/Seinfeld.mp4";
 
             // only one sensor is currently supported
             this.kinectSensor = KinectSensor.GetDefault();
@@ -275,7 +285,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                             // if the current body is not tracked, pause its detector so we don't waste resources trying to get invalid gesture results
                             this.gestureDetectorList[i].IsPaused = trackingId == 0;
                         }
-                        if (gestureFound == 0 && this.gestureDetectorList[i].currentConfidence > 0)
+                        if (gestureFound == 0 && this.gestureDetectorList[i].currentConfidence > 0.4)
                         {
                             currentConfidence = this.gestureDetectorList[i].currentConfidence;
                             currentDetected = this.gestureDetectorList[i].currentDetected;
@@ -284,15 +294,14 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                         }
                         TimeSpan seconds = time - prevTime;
                         double elapsed = seconds.TotalSeconds;
+                        CurrentState.Content = state.ToString();
                         if (elapsed > 1)
                             GestureTime.Content = "Ready";
                         else
                             GestureTime.Content = elapsed.ToString();
                         if (currentConfidence != 0 && elapsed > 1)
                             {
-                                prevTime = DateTime.Now;
-                                CurrentState.Content = state.ToString();
-                                
+                                prevTime = DateTime.Now;                               
                                 if (state == 0)
                                 {
                                     if (currentName == "HandShoulder_Right")
@@ -322,7 +331,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                         pwrS1 = 1;
                                         PwrUSBWrapper.SetPortPowerUSB(pwrS1, pwrS2, pwrS3);
                                     }
-                                    else if (currentName == "ArmUp_Left" && Reading == 1)
+                                    else if (currentName == "ArmDown_Left" && Reading == 1)
                                     {
                                         state = 4;
                                         Reading = 0;
@@ -385,7 +394,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     {
                                         state = 0;
                                     }
-                                    else if (currentName == "ArmUp_Left" && Reading == 1)
+                                    else if (currentName == "ArmDown_Left" && Reading == 1)
                                     {
                                         state = 4;
                                         Reading = 0;
@@ -444,7 +453,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                         Music.SoundLocation = SongLocations[Song];
                                         Music.Play();
                                     }
-                                    else if (currentName == "ArmUp_Left" && Reading == 1)
+                                    else if (currentName == "ArmDown_Left" && Reading == 1)
                                     {
                                         state = 4;
                                         Reading = 0;
@@ -458,7 +467,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     { }
                                     else if (currentName == "HandFrontOpen_Right")
                                     {
-                                        window2.SetMedia("C:/Users/Evan/Documents/GitHub/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/TheOffice.mp4");
+                                        window2.SetMedia(VideoLocations[Video]);
                                         window2.PlayMedia();
                                         window2.Show();
                                     }
@@ -486,10 +495,21 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     }
                                     else if (currentName == "ArmIn_Right")
                                     {
+                                        Video--;
+                                        if (Video < 0)
+                                            Video = 5;
+                                        window2.SetMedia(VideoLocations[Video]);
+                                        window2.PlayMedia();
                                     }
                                     else if (currentName == "ArmOut_Right")
-                                    { }
-                                    else if (currentName == "ArmUp_Left" && Reading == 1)
+                                    {
+                                        Video++;
+                                        if (Video > 5)
+                                            Video = 0;
+                                        window2.SetMedia(VideoLocations[Video]);
+                                        window2.PlayMedia();
+                                    }
+                                    else if (currentName == "ArmDown_Left" && Reading == 1)
                                     {
                                         state = 4;
                                         Reading = 0;
@@ -497,7 +517,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                 }
                                 else if (state == 4)
                                 {
-                                    if(currentName == "ArmDown_Left")
+                                    if(currentName == "ArmUp_Left" && Reading == 0)
                                     {
                                         state = 0;
                                         Reading = 1;

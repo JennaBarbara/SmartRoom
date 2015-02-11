@@ -2,8 +2,8 @@
 <GestureBuilderFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<SolutionFile>
 		<Header>
-			<Date>2015-02-07</Date>
-			<Time>16:16:23.2997390-05:00</Time>
+			<Date>2015-02-10</Date>
+			<Time>19:11:26.2163043-05:00</Time>
 			<Version>1</Version>
 			<Type>Solution</Type>
 			<ID>5576440b-266e-4d55-b781-4b6d20b452c0</ID>
@@ -12,6 +12,12 @@
 			<Files>
 				<Name />
 				<Content>
+					<Items>
+						<File>../../Documents/KinectFeb10/ArmDown_Left.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/KinectFeb10/ArmDown_Left.a.vgbproj</File>
+					</Items>
 					<Items>
 						<File>../../Documents/ArmsMovements/ArmDown_Right.vgbproj</File>
 					</Items>
@@ -29,6 +35,12 @@
 					</Items>
 					<Items>
 						<File>../../Documents/ArmsMovements/ArmOut_Right.a.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/KinectFeb10/ArmUp_Left.vgbproj</File>
+					</Items>
+					<Items>
+						<File>../../Documents/KinectFeb10/ArmUp_Left.a.vgbproj</File>
 					</Items>
 					<Items>
 						<File>ArmUp_Right.vgbproj</File>

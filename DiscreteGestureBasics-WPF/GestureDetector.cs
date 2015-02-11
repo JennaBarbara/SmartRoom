@@ -21,9 +21,9 @@
         /// <summary> Path to the gesture database that was trained with VGB </summary>
         private readonly string gestureDatabase = @"Database\SmartHome.gbd";
         /// <summary> the discrete gesture in the database that we want to track </summary>
-        string[,] GestureNames = new string[5,9];
-        Boolean[,] GestureDetected = new Boolean[5,9];
-        float[,] GestureConfidence = new float[5,9];
+        string[,] GestureNames = new string[5,10];
+        Boolean[,] GestureDetected = new Boolean[5,10];
+        float[,] GestureConfidence = new float[5,10];
 
        
 
@@ -74,6 +74,7 @@
             GestureNames[0,2] = "HandUpOpen_Right";
             GestureNames[0,3] = "HandEar_Right";
             GestureNames[0,4] = "FistsTogether";
+            GestureNames[0,5] = "ArmDown_Left";
 
             //CLIMATE
             GestureNames[1,0] = "ArmDown_Right";
@@ -85,6 +86,7 @@
             GestureNames[1,6] = "HandOnHead_Right";
             GestureNames[1, 7] = "ArmIn_Right";
             GestureNames[1, 8] = "ArmOut_Right";
+            GestureNames[1, 9] = "ArmDown_Left";
 
             //MUSIC
             GestureNames[2, 0] = "ArmDown_Right";
@@ -96,6 +98,7 @@
             GestureNames[2, 6] = "HandOnHead_Right";
             GestureNames[2, 7] = "ArmIn_Right";
             GestureNames[2, 8] = "ArmOut_Right";
+            GestureNames[2, 9] = "ArmDown_Left";
 
             //TELEVISION
             GestureNames[3, 0] = "ArmDown_Right";
@@ -107,6 +110,7 @@
             GestureNames[3, 6] = "HandOnHead_Right";
             GestureNames[3, 7] = "ArmIn_Right";
             GestureNames[3, 8] = "ArmOut_Right";
+            GestureNames[3, 9] = "ArmDown_Left";
 
             GestureNames[4, 0] = "ArmUp_Left";
             GestureNames[4, 1] = "ArmDown_Left";
@@ -266,7 +270,7 @@
         private void Source_TrackingIdLost(object sender, TrackingIdLostEventArgs e)
         {
             // update the GestureResultView object to show the 'Not Tracked' image in the UI
-            this.GestureResultView.UpdateGestureResult(false,currentgesture,currentDetected,currentConfidence);
+            this.GestureResultView.UpdateGestureResult(false,"",false,0);
         }
     }
 }

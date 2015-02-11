@@ -33,14 +33,11 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             Media.IsMuted = false;
             Media.Visibility = Visibility.Visible;
             Media.Play();
-
-            Console.WriteLine(Media.IsVisible+ " " +Media.IsLoaded);
-            
         }
 
         internal void StopMedia()
         {
-            Media.Stop();
+            Media.Pause();
         }
     }
 }
