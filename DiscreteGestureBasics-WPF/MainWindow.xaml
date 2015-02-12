@@ -57,8 +57,8 @@
                 </Viewbox>
                 <TextBlock Text="Kinect Event Detection" TextWrapping="Wrap" Margin="5 10 5 5" Foreground="{StaticResource MediumGreyBrush}" FontFamily="Segoe UI" FontSize="14"/>
             </StackPanel>
-            <Label x:Name="CurrentState" Content="State" Grid.Column="2" HorizontalAlignment="Left" Margin="261.6,111.8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100"/>
-            <Label x:Name="GestureTime" Content="Timer" Grid.Column="2" HorizontalAlignment="Left" Margin="261.6,137.8,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label x:Name="CurrentState" Content="State" Grid.Column="2" HorizontalAlignment="Left" Margin="165.6,67.8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="100" FontSize="36" Height="79"/>
+            <Label x:Name="GestureTime" Content="Timer" Grid.Column="2" HorizontalAlignment="Left" Margin="168.6,151.8,0,-43.6" Grid.Row="2" VerticalAlignment="Top" Height="83" Width="183" FontSize="24"/>
         </Grid>
 
         <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}" Margin="0,0,0,0.4">

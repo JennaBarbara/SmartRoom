@@ -23,6 +23,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
     using Microsoft.Kinect.VisualGestureBuilder;
     using System.Media;
     using PowerUSB;
+    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Interaction logic for the MainWindow
@@ -62,15 +63,16 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
         int Video = 0;
         int VideoPlaying = 0;
         int Reading = 1;
-        SoundPlayer Music = new SoundPlayer();
         private DateTime time = new DateTime();
         private DateTime prevTime = new DateTime();
         MediaWindow window2 = new MediaWindow();
+        MediaWindow Music = new MediaWindow();
         /// <summary>
         /// Initializes a new instance of the MainWindow class
         /// </summary>
         public MainWindow()
         {
+
             USBControl.init();
             
             SongLocations[0] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/3005.wav";
@@ -121,7 +123,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             // set our data context objects for display in UI
             this.DataContext = this;
             this.kinectBodyViewbox.DataContext = this.kinectBodyView;
-            
+            window2.Show();
             // create a gesture detector for each body (6 bodies => 6 detectors) and create content controls to display results in the UI
             int col0Row = 0;
             int col1Row = 0;
@@ -285,7 +287,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                             // if the current body is not tracked, pause its detector so we don't waste resources trying to get invalid gesture results
                             this.gestureDetectorList[i].IsPaused = trackingId == 0;
                         }
-                        if (gestureFound == 0 && this.gestureDetectorList[i].currentConfidence > 0.4)
+                        if (gestureFound == 0 && this.gestureDetectorList[i].currentConfidence > 0.3)
                         {
                             currentConfidence = this.gestureDetectorList[i].currentConfidence;
                             currentDetected = this.gestureDetectorList[i].currentDetected;
@@ -299,7 +301,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                             GestureTime.Content = "Ready";
                         else
                             GestureTime.Content = elapsed.ToString();
-                        if (currentConfidence != 0 && elapsed > 1)
+                        if (currentConfidence != 0 && elapsed > 0.5)
                             {
                                 prevTime = DateTime.Now;                               
                                 if (state == 0)
@@ -404,18 +406,22 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                 {
 
                                     if (currentName == "ArmDown_Right")
-                                    { }
+                                    {
+                                        Music.SetVolume(-0.3);
+                                    }
                                     else if (currentName == "ArmUp_Right")
-                                    { }
+                                    {
+                                        Music.SetVolume(0.1);
+                                    }
                                     else if (currentName == "HandFrontOpen_Right" && SongPlaying ==0)
                                     {
-                                        Music.SoundLocation = SongLocations[Song];
-                                        Music.Play();
+                                        Music.SetMedia(SongLocations[Song]);
+                                        Music.PlayMedia();
                                         SongPlaying = 1;
                                     }
                                     else if (currentName == "HandFrontClosed_Right" && SongPlaying ==1)
                                     {
-                                        Music.Stop();
+                                        Music.StopMedia();
                                         SongPlaying = 0;
                                     }
                                     else if (currentName == "HandUpClosed_Right" && pwrS1 == 1)
@@ -442,16 +448,16 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                         Song = Song + 1;
                                         if (Song > 8)
                                             Song = 0;
-                                        Music.SoundLocation = SongLocations[Song];
-                                        Music.Play();
+                                        Music.SetMedia(SongLocations[Song]);
+                                        Music.PlayMedia();
                                     }
                                     else if (currentName == "ArmOut_Right" && SongPlaying ==1)
                                     {
                                         Song = Song - 1;
                                         if (Song < 0)
                                             Song = 8;
-                                        Music.SoundLocation = SongLocations[Song];
-                                        Music.Play();
+                                        Music.SetMedia(SongLocations[Song]);
+                                        Music.PlayMedia();
                                     }
                                     else if (currentName == "ArmDown_Left" && Reading == 1)
                                     {
@@ -462,14 +468,17 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                 else if (state == 3)
                                 {
                                     if (currentName == "ArmDown_Right")
-                                    { }
+                                    {
+                                        window2.SetVolume(-0.3);
+                                    }
                                     else if (currentName == "ArmUp_Right")
-                                    { }
+                                    {
+                                        window2.SetVolume(0.1);
+                                    }
                                     else if (currentName == "HandFrontOpen_Right")
                                     {
                                         window2.SetMedia(VideoLocations[Video]);
                                         window2.PlayMedia();
-                                        window2.Show();
                                     }
                                     else if (currentName == "HandFrontClosed_Right")
                                     {

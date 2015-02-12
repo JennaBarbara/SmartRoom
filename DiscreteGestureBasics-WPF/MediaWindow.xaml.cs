@@ -39,5 +39,20 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
         {
             Media.Pause();
         }
+
+        internal void SetVolume(double amt)
+        {
+            double volume;
+            volume = Media.Volume + amt;
+            if (volume>= 100)
+            {
+                volume = 99;
+            }
+            else if (volume < 0)
+            {
+                volume = 0;
+            }
+            Media.Volume = volume;
+        }
     }
 }
