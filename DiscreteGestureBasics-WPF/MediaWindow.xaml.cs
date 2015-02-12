@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Navigation;
+
 
 namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
 {
@@ -19,6 +21,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
     /// </summary>
     public partial class MediaWindow : Window
     {
+        double timeElapsed;
         public MediaWindow()
         {
             InitializeComponent();

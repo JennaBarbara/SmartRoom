@@ -97,6 +97,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -118,6 +121,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MediaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,10 +168,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\Music\GiveItUp.wav" />
     <Content Include="Database\Videos\BustyBass.mp4" />
     <Content Include="Database\Videos\Habs.mp4" />
     <Content Include="Database\Videos\Kramer.mp4" />
-    <Content Include="Database\Music\3005.wav" />
     <Content Include="Database\Music\Brainstorm.wav" />
     <Content Include="Database\Music\DoIWannaKnow.wav" />
     <Content Include="Database\Music\GetLucky.wav">

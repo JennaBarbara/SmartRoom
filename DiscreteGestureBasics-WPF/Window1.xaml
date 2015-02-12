@@ -1,0 +1,12 @@
+﻿<Window x:Class="Microsoft.Samples.Kinect.DiscreteGestureBasics.UserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="UserWindow" Height="435.6" Width="1177.2">
+    <Grid>
+        <Label Content="State:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="81" Width="172" FontSize="50"/>
+        <Label x:Name="StateName" Content="Base State" HorizontalAlignment="Left" Margin="0,91,0,0" VerticalAlignment="Top" Height="81" Width="1003" FontSize="50" FontStyle="Italic" FontWeight="Bold"/>
+        <Label Content="Temperature:" HorizontalAlignment="Left" Margin="0,172,0,0" VerticalAlignment="Top" Height="81" Width="304" FontSize="50"/>
+        <Label x:Name="TempValue" Content="21" HorizontalAlignment="Left" Margin="10,258,0,0" VerticalAlignment="Top" Height="81" Width="857" FontSize="50" FontWeight="Bold" FontStyle="Italic"/>
+
+    </Grid>
+</Window>

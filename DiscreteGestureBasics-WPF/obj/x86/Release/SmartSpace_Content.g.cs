@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/giveitup.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/videos/bustybass.mp4")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/videos/habs.mp4")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/videos/kramer.mp4")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/3005.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/brainstorm.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/doiwannaknow.wav")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/music/getlucky.wav")]

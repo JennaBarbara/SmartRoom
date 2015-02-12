@@ -231,7 +231,7 @@
                             int index=0;
                             int state = MainWindow.state;
                             
-                            for (i = 0; i < 9; i++)
+                            for (i = 0; i < 10; i++)
                             {
                                 if (gesture.Name.Equals(GestureNames[state, i]) && gesture.GestureType == GestureType.Discrete)
                                 {
@@ -240,7 +240,7 @@
                                 }
                             }
 
-                            for (i = 0; i < 9;i++)
+                            for (i = 0; i < 10;i++)
                             {
                                 if(GestureConfidence[state,i] > currentConfidence)
                                 {

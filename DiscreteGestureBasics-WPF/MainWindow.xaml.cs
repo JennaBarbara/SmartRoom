@@ -63,10 +63,12 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
         int Video = 0;
         int VideoPlaying = 0;
         int Reading = 1;
+        int temp = 20;
         private DateTime time = new DateTime();
         private DateTime prevTime = new DateTime();
         MediaWindow window2 = new MediaWindow();
         MediaWindow Music = new MediaWindow();
+        UserWindow User = new UserWindow();
         /// <summary>
         /// Initializes a new instance of the MainWindow class
         /// </summary>
@@ -75,7 +77,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
 
             USBControl.init();
             
-            SongLocations[0] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/3005.wav";
+            SongLocations[0] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Suburbs.wav";
             SongLocations[1] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Brainstorm.wav";
             SongLocations[2] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/DoIWannaKnow.wav";
             SongLocations[3] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/GetLucky.wav";
@@ -83,7 +85,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             SongLocations[5] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/LonelyBoy.wav";
             SongLocations[6] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Riptide.wav";
             SongLocations[7] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/SnapOut.wav";
-            SongLocations[8] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/Suburbs.wav";
+            SongLocations[8] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Music/GiveItUp.wav";
 
             VideoLocations[0] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/BustyBass.mp4";
             VideoLocations[1] = "C:/Users/Evan/Documents/Github/SmartRoom/DiscreteGestureBasics-WPF/Database/Videos/Habs.mp4";
@@ -123,7 +125,13 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
             // set our data context objects for display in UI
             this.DataContext = this;
             this.kinectBodyViewbox.DataContext = this.kinectBodyView;
+
+
             window2.Show();
+            User.Show();
+
+
+
             // create a gesture detector for each body (6 bodies => 6 detectors) and create content controls to display results in the UI
             int col0Row = 0;
             int col1Row = 0;
@@ -309,14 +317,17 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     if (currentName == "HandShoulder_Right")
                                     {
                                         state = 1;
+                                        User.SetState(state);
                                     }
                                     else if (currentName == "HandEar_Right")
                                     {
                                         state = 2;
+                                        User.SetState(state);
                                     }
                                     else if (currentName == "FistsTogether")
                                     {
                                         state = 3;
+                                        User.SetState(state);
                                     }
                                     else if (currentName == "HandUpClosed_Right" && pwrS1 == 1)
                                     {
@@ -337,16 +348,21 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     {
                                         state = 4;
                                         Reading = 0;
+                                        User.SetState(state);
                                     }
                                 }
                                 else if (state == 1)  //Climate 
                                 {
 
                                     if (currentName == "ArmDown_Right")  // Temp Down
-                                    { }
+                                    {
+                                        temp = temp - 1;
+                                        User.SetTemp(temp);
+                                    }
                                     else if (currentName == "ArmUp_Right") // Temp Up
                                     {
-
+                                        temp = temp + 1;
+                                        User.SetTemp(temp);
                                     }
                                     else if (currentName == "HandFrontOpen_Right" && pwrS2 == 0) // Fan On
                                     {
@@ -395,11 +411,13 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     else if (currentName == "HandOnHead_Right")
                                     {
                                         state = 0;
+                                        User.SetState(state);
                                     }
                                     else if (currentName == "ArmDown_Left" && Reading == 1)
                                     {
                                         state = 4;
                                         Reading = 0;
+                                        User.SetState(state);
                                     }
                                 }
                                 else if (state == 2)
@@ -442,6 +460,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     else if (currentName == "HandOnHead_Right")
                                     {
                                         state = 0;
+                                        User.SetState(state);
                                     }
                                     else if (currentName == "ArmIn_Right" && SongPlaying ==1)
                                     {
@@ -463,6 +482,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     {
                                         state = 4;
                                         Reading = 0;
+                                        User.SetState(state);
                                     }
                                 }
                                 else if (state == 3)
@@ -501,6 +521,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     else if (currentName == "HandOnHead_Right")
                                     {
                                         state = 0;
+                                        User.SetState(state);
                                     }
                                     else if (currentName == "ArmIn_Right")
                                     {
@@ -522,6 +543,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     {
                                         state = 4;
                                         Reading = 0;
+                                        User.SetState(state);
                                     }
                                 }
                                 else if (state == 4)
@@ -530,6 +552,7 @@ namespace Microsoft.Samples.Kinect.DiscreteGestureBasics
                                     {
                                         state = 0;
                                         Reading = 1;
+                                        User.SetState(state);
                                     }
                                 }
                             }
