@@ -29,6 +29,8 @@ C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Relea
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\MediaWindow.baml
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\MediaWindow.g.cs
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\Database\Videos\TheOffice.mp4
-C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\SmartSpace.csprojResolveAssemblyReference.cache
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\Window1.baml
 C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\Window1.g.cs
+C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\Database\gestureBDB.gbd
+C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\bin\x86\Release\Database\gestureBDB.vgbsln
+C:\Users\Evan\Documents\GitHub\SmartRoom\DiscreteGestureBasics-WPF\obj\x86\Release\SmartSpace.csprojResolveAssemblyReference.cache

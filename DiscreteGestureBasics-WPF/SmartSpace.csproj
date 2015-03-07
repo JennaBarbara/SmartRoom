@@ -149,6 +149,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Database\gestureBDB.gbd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Database\gestureBDB.vgbsln">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Database\November16.gbd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

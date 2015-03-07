@@ -19,11 +19,11 @@
     {
 
         /// <summary> Path to the gesture database that was trained with VGB </summary>
-        private readonly string gestureDatabase = @"Database\SmartHome.gbd";
+        private readonly string gestureDatabase = @"Database\gestureBDB.gbd";
         /// <summary> the discrete gesture in the database that we want to track </summary>
-        string[,] GestureNames = new string[5,10];
-        Boolean[,] GestureDetected = new Boolean[5,10];
-        float[,] GestureConfidence = new float[5,10];
+        string[,] GestureNames = new string[2,6];
+        Boolean[,] GestureDetected = new Boolean[2,6];
+        float[,] GestureConfidence = new float[2,6];
 
        
 
@@ -68,54 +68,17 @@
                 this.vgbFrameReader.IsPaused = true;
                 this.vgbFrameReader.FrameArrived += this.Reader_GestureFrameArrived;
             }
+
             //BASE CASE
-            GestureNames[0,0] = "HandShoulder_Right";
-            GestureNames[0,1] = "HandUpClosed_Right";
-            GestureNames[0,2] = "HandUpOpen_Right";
-            GestureNames[0,3] = "HandEar_Right";
-            GestureNames[0,4] = "FistsTogether";
-            GestureNames[0,5] = "ArmDown_Left";
+            GestureNames[0,0] = "Boobs";
+            GestureNames[0,1] = "Ass";
+            GestureNames[0,2] = "Threesome";
+            GestureNames[0,3] = "Bondage";
+            GestureNames[0,4] = "BigDick";
+            GestureNames[0,5] = "ArmUp_Left";
+            GestureNames[0,6] = "HandEar_Right";
+            GestureNames[1, 0] = "ArmDown_Left";
 
-            //CLIMATE
-            GestureNames[1,0] = "ArmDown_Right";
-            GestureNames[1,1] = "ArmUp_Right";
-            GestureNames[1,2] = "HandFrontOpen_Right";
-            GestureNames[1,3] = "HandFrontClosed_Right";
-            GestureNames[1,4] = "HandUpOpen_Right";
-            GestureNames[1,5] = "HandUpClosed_Right";
-            GestureNames[1,6] = "HandOnHead_Right";
-            GestureNames[1, 7] = "ArmIn_Right";
-            GestureNames[1, 8] = "ArmOut_Right";
-            GestureNames[1, 9] = "ArmDown_Left";
-
-            //MUSIC
-            GestureNames[2, 0] = "ArmDown_Right";
-            GestureNames[2, 1] = "ArmUp_Right";
-            GestureNames[2, 2] = "HandFrontOpen_Right";
-            GestureNames[2, 3] = "HandFrontClosed_Right";
-            GestureNames[2, 4] = "HandUpOpen_Right";
-            GestureNames[2, 5] = "HandUpClosed_Right";
-            GestureNames[2, 6] = "HandOnHead_Right";
-            GestureNames[2, 7] = "ArmIn_Right";
-            GestureNames[2, 8] = "ArmOut_Right";
-            GestureNames[2, 9] = "ArmDown_Left";
-
-            //TELEVISION
-            GestureNames[3, 0] = "ArmDown_Right";
-            GestureNames[3, 1] = "ArmUp_Right";
-            GestureNames[3, 2] = "HandFrontOpen_Right";
-            GestureNames[3, 3] = "HandFrontClosed_Right";
-            GestureNames[3, 4] = "HandUpOpen_Right";
-            GestureNames[3, 5] = "HandUpClosed_Right";
-            GestureNames[3, 6] = "HandOnHead_Right";
-            GestureNames[3, 7] = "ArmIn_Right";
-            GestureNames[3, 8] = "ArmOut_Right";
-            GestureNames[3, 9] = "ArmDown_Left";
-
-            GestureNames[4, 0] = "ArmUp_Left";
-            GestureNames[4, 1] = "ArmDown_Left";
-
-            
 
 
             // load the gestures from the gesture database. Can also load individual gestures as necessary. However for us, it isn't.
@@ -231,7 +194,7 @@
                             int index=0;
                             int state = MainWindow.state;
                             
-                            for (i = 0; i < 10; i++)
+                            for (i = 0; i < 6; i++)
                             {
                                 if (gesture.Name.Equals(GestureNames[state, i]) && gesture.GestureType == GestureType.Discrete)
                                 {
@@ -240,7 +203,7 @@
                                 }
                             }
 
-                            for (i = 0; i < 10;i++)
+                            for (i = 0; i < 6;i++)
                             {
                                 if(GestureConfidence[state,i] > currentConfidence)
                                 {
